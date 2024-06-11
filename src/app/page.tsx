@@ -1,6 +1,7 @@
 import Image from "next/image";
 import prisma from "@/lib/prisma"
 import JobListItem from "@/components/JobListItem";
+import JobFilterSidebar from "@/components/JobFilterSidebar";
 
 export default async function Home() {
 
@@ -20,7 +21,8 @@ export default async function Home() {
         <h3>Find your dream job!</h3>
       </div>
 
-      <section>
+      <section className="flex flex-col md:flex-row">
+        <JobFilterSidebar />
         <div>
           {/* JobListItem */}
           {jobs.map((job) => (
