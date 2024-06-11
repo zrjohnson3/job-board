@@ -4,6 +4,7 @@ import Image from 'next/image';
 import companyLogoPlaceholder from '../../public/assets/company-logo-placeholder.png';
 import { Banknote, Briefcase, Calendar, Clock, Globe2, MapPin } from 'lucide-react';
 import { formatMoney, relativeDate } from '@/lib/utils';
+import Badge from './Badge';
 
 interface JobListItemProps {
 
@@ -32,7 +33,7 @@ const JobListItem = ({ job: {
     createdAt,
 } }: JobListItemProps) => {
     return (
-        <article className="flex gap-3 p-5 m-2 border bg-white shadow-lg rounded-lg hover:bg-muted/60">
+        <article className="flex gap-3 lg:p-5 lg:m-2 md:p-3 md:m-2 p-2 m-1 border bg-white shadow-lg rounded-lg hover:bg-muted/60">
             <Image
                 alt='Company Logo'
                 src={companyLogoUrl || companyLogoPlaceholder}
@@ -69,9 +70,13 @@ const JobListItem = ({ job: {
                     </p>
                 </div>
             </div>
-
-
-            {title}
+            <div className='hidden sm:flex flex-col shrink-0 items-end justify-between'>
+                <Badge>{type}</Badge>
+                <span className='flex items-center gap-1.5 text-muted-foreground'>
+                    <Clock size={16} className="shrink-0" />
+                    {relativeDate(createdAt)}
+                </span>
+            </div>
         </article >
     )
 }

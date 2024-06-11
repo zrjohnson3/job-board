@@ -14,13 +14,22 @@ export default async function Home() {
   })
 
   return (
-    <main className="flex min-h-screen flex-col justify-between p-24">
-      <h1>Zen Job Board! </h1>
+    <main className="flex min-h-screen flex-col justify-between max-w-5xl m-auto px-3 my-10 space-y-3">
+      <div className="text-center tracking-tight ">
+        <h1 className="font-extrabold text-xl md:text-3xl lg:text-5xl">Zen Jobs </h1>
+        <h3>Find your dream job!</h3>
+      </div>
 
-      {/* JobListItem */}
-      {jobs.map((job) => (
-        <JobListItem key={job.id} job={job} />
-      ))}
+      <section>
+        <div>
+          {/* JobListItem */}
+          {jobs.map((job) => (
+            <JobListItem key={job.id} job={job} />
+          ))}
+        </div>
+
+      </section>
+
 
     </main>
   );
