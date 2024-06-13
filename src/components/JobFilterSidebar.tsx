@@ -12,7 +12,7 @@ async function filterJobs(formData: FormData) {
     'use server'; // Makes this function run on the server (Server Components feature)
 
     console.log('Filtering jobs with:', {
-        search: formData.get('search'),
+        q: formData.get('q'),
         type: formData.get('type'),
         location: formData.get('location'),
         remote: formData.get('remote'),
@@ -22,10 +22,10 @@ async function filterJobs(formData: FormData) {
 
     const parseResult = jobFilterSchema.safeParse(values); // Validate the values with the schema
 
-    const { search, type, location, remote } = jobFilterSchema.parse(values); // Destructure the values from the parsed result
+    const { q, type, location, remote } = jobFilterSchema.parse(values); // Destructure the values from the parsed result
 
     const searchParams = new URLSearchParams({
-        ...(search && { search: search.trim() }), // Add search parameter if it exists
+        ...(q && { q: q.trim() }), // Add search parameter if it exists
         ...(type && { type }), // Add type parameter if it exists
         ...(location && { location }), // Add location parameter if it exists
         ...(remote && { remote: 'true' }), // Add remote parameter if it exists
@@ -50,8 +50,8 @@ export default async function JobFilterSidebar() {
             <form action={filterJobs} >
                 <div className='space-y-4'>
                     <div className='flex flex-col gap-2 p-2'>
-                        <Label htmlFor='search'>Search</Label>
-                        <Input type='text' id='search' name='search' placeholder='Title, Company, etc..' />
+                        <Label htmlFor='q'>Search</Label>
+                        <Input type='text' id='q' name='q' placeholder='Title, Company, etc..' />
                     </div>
                     <div className='flex flex-col gap-2 p-2'>
                         <Label htmlFor='type'>Type</Label>
