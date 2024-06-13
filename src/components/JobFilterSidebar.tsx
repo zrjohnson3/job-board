@@ -5,6 +5,8 @@ import Select from './Select';
 import prisma from '@/lib/prisma';
 import { jobTypes } from '@/lib/job-types';
 import { Button } from './ui/button';
+import { jobFilterSchema } from '@/lib/validation';
+import { redirect } from 'next/navigation';
 
 async function filterJobs(formData: FormData) {
     'use server'; // Makes this function run on the server (Server Components feature)
@@ -15,6 +17,22 @@ async function filterJobs(formData: FormData) {
         location: formData.get('location'),
         remote: formData.get('remote'),
     });
+
+    const values = Object.fromEntries(formData.entries()); // Convert formData to an object to use in the query
+
+    const parseResult = jobFilterSchema.safeParse(values); // Validate the values with the schema
+
+    const { search, type, location, remote } = jobFilterSchema.parse(values); // Destructure the values from the parsed result
+
+    const searchParams = new URLSearchParams({
+        ...(search && { search: search.trim() }), // Add search parameter if it exists
+        ...(type && { type }), // Add type parameter if it exists
+        ...(location && { location }), // Add location parameter if it exists
+        ...(remote && { remote: 'true' }), // Add remote parameter if it exists
+
+    }); // Create a new URLSearchParams object to store the query parameters
+
+    redirect(`/?${searchParams.toString()}`); // Redirect to the jobs page with the query parameters
 }
 
 export default async function JobFilterSidebar() {
