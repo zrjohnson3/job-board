@@ -30,7 +30,8 @@ export default async function Home({ searchParams: { q, type, location, remote }
 
       <section className="flex flex-col-reverse flex-1 md:flex-row">
         <JobResults filterValues={filterValues} />
-        <JobFilterSidebar />
+        <JobFilterSidebar defaultValues={filterValues} />
+        
       </section>
     </main>
   );
