@@ -79,8 +79,8 @@ export default async function JobFilterSidebar({
                     </div>
                     <div className='flex flex-col gap-2 p-2'>
                         <Label htmlFor='location'>Location</Label>
-                        <Select className='' id='location' name='location' defaultValue={defaultValues.location || "all"}>
-                            <option value='all'>All Locations</option>
+                        <Select className='' id='location' name='location' defaultValue={defaultValues.location || ""}>
+                            <option defaultValue={""} value=''>All Locations</option>
                             {/* Fetch locations from database */}
                             {distinctLocations.map((location) => (
                                 <option key={location} value={location}>
