@@ -28,9 +28,9 @@ export default async function Home({ searchParams: { q, type, location, remote }
         <h3>Find your dream job!</h3>
       </div>
 
-      <section className="flex flex-col md:flex-row">
-        <JobFilterSidebar />
+      <section className="flex flex-col-reverse flex-1 md:flex-row">
         <JobResults filterValues={filterValues} />
+        <JobFilterSidebar />
       </section>
     </main>
   );

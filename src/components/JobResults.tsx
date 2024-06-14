@@ -54,7 +54,7 @@ export default async function JobResults({ filterValues: { q, type, location, re
                 <JobListItem key={job.id} job={job} />
             ))}
             {jobs.length === 0 && (
-                <p className="m-auto text-center">
+                <p className="m-auto text-center mt-20">
                     No jobs found. Try adjusting your search filters.
                 </p>
             )}
