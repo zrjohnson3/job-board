@@ -6,7 +6,7 @@ export default function Footer() {
     return (
         <footer className='border-t'>
             <div className='mx-auto max-w-6xl space-y-5 px-3 py-5'>
-                <div className='flex flex-wrap gap-5 items-center justify-evenly'>
+                <div className='flex flex-wrap gap-5 items-center justify-evenly text-muted-foreground'>
 
                     <Link href='/about' className='hover:underline'>
                         About Us
@@ -16,6 +16,12 @@ export default function Footer() {
                     </Link>
                     <Link href='/contact' className='hover:underline'>
                         Contact
+                    </Link>
+                    <Link href='/contact' className='hover:underline'>
+                        Terms of Service
+                    </Link>
+                    <Link href='/contact' className='hover:underline'>
+                        Privacy Policy
                     </Link>
                 </div>
             </div>
