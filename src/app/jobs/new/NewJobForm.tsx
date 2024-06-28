@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input'
 import { Select, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, SelectContent } from '@/components/ui/select'
 import { jobTypes } from '@/lib/job-types'
 import LocationInput from '@/components/LocationInput'
+import { X } from 'lucide-react'
 
 
 export default function NewJobForm() {
@@ -59,7 +60,7 @@ export default function NewJobForm() {
                         <form
                             noValidate
                             onSubmit={handleSubmit(onSubmit)}
-                            className='z-auto w-2/3 space-y-6'
+                            className='z-auto w-auto space-y-6'
                         >
                             <FormField
                                 control={control}
@@ -174,7 +175,17 @@ export default function NewJobForm() {
                                             />
                                         </FormControl>
                                         {watch('location') && (
-                                            watch('location')
+                                            <div className='flex items-center gap-1'>
+                                                <button
+                                                    type='button'
+                                                    onClick={() => {
+                                                        setValue('location', '', { shouldValidate: true })
+                                                    }}
+                                                >
+                                                    <X size={20} />
+                                                </button>
+                                                <span className='text-sm'>{watch('location')}</span>
+                                            </div>
                                         )}
                                         <FormMessage />
                                     </FormItem>
@@ -190,7 +201,7 @@ export default function NewJobForm() {
                                 name='locationTypes'
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Location Type</FormLabel>
+                                        <FormLabel>Office Location</FormLabel>
                                         <FormControl>
                                             <Select {...field}>
                                                 <SelectTrigger className="">
@@ -224,20 +235,57 @@ export default function NewJobForm() {
 
 
 
-                            {/* <FormField
-                                control={control}
-                                name='location'
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Location</FormLabel>
-                                        <FormControl>
-                                            <Input {...field} type='text' placeholder='Remote, Hybrid, In-Person, Etc..' />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-
-                                )}
-                            /> */}
+                            {/* Application Email */}
+                            <div className='space-y-2'>
+                                <FormLabel>How to Apply</FormLabel>
+                                <div className='flex justify-between'>
+                                    <FormField
+                                        control={control}
+                                        name='applicationEmail'
+                                        render={({ field }) => (
+                                            <FormItem className='grow'>
+                                                <FormControl>
+                                                    <div className='flex items-center'>
+                                                        <Input
+                                                            {...field}
+                                                            type='email'
+                                                            id='applicationEmail'
+                                                            placeholder='Email Address'
+                                                        />
+                                                        <span className='mx-2'>or</span>
+                                                    </div>
+                                                </FormControl>
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={control}
+                                        name='applicationUrl'
+                                        render={({ field }) => (
+                                            <FormItem className='grow'>
+                                                <FormControl>
+                                                    <Input
+                                                        {...field}
+                                                        type='url'
+                                                        id='applicationUrl'
+                                                        placeholder='Website Url'
+                                                        onChange={(e) => {
+                                                            // Trigger validation on the email field when the url field changes
+                                                            trigger('applicationEmail')
+                                                        }}
+                                                    />
+                                                </FormControl>
+                                            </FormItem>
+                                        )}
+                                    />
+                                    {/* <Input
+                                    type='email'
+                                    placeholder='Email Address'
+                                    {...form.register('applicationEmail')}
+                                /> */}
+                                    <FormMessage />
+                                </div>
+                            </div>
 
 
                             <Button type='submit'>Submit</Button>

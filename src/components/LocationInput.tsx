@@ -59,7 +59,9 @@ export default forwardRef<HTMLInputElement, LocationInputProps>(
                                     onMouseDown={(e) => {
                                         e.preventDefault();
                                         onLocationSelected(city);
-                                        setLocationSearchInput(city); // Set the input value to the selected city (for display purposes) (or you can clear it if you want to, but I think it's better to keep it for reference)
+                                        // Set the input value to the selected city (for display purposes) 
+                                        // setLocationSearchInput(city);
+                                        setLocationSearchInput(""); // Clear the input value after selecting a city because we dispalying values below the input
                                     }}
                                 >
                                     {city}
