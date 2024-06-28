@@ -163,7 +163,7 @@ export default function NewJobForm() {
                             {/* location */}
                             <FormField
                                 control={control}
-                                name='locationTypes'
+                                name='location'
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>Location</FormLabel>
@@ -171,9 +171,12 @@ export default function NewJobForm() {
                                             <LocationInput
                                                 onLocationSelected={field.onChange} // Using our custom location input component to handle location selection -> this will update the value of the field in the react-hook-form by calling the onChange function with the new location value
                                                 ref={field.ref}
-                                                placeholder='Providence, Rhode Island'
                                             />
                                         </FormControl>
+                                        {watch('location') && (
+                                            watch('location')
+                                        )}
+                                        <FormMessage />
                                     </FormItem>
 
                                 )}
@@ -184,7 +187,7 @@ export default function NewJobForm() {
                             {/* location type */}
                             <FormField
                                 control={control}
-                                name='location'
+                                name='locationTypes'
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>Location Type</FormLabel>

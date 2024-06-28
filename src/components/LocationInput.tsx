@@ -8,11 +8,15 @@ interface LocationInputProps extends React.InputHTMLAttributes<HTMLInputElement>
     onLocationSelected: (location: string) => void;
 }
 
+// LocationInput component that takes an onLocationSelected callback prop and calls it whenever the input value changes.
 export default forwardRef<HTMLInputElement, LocationInputProps>(
     function LocationInput({ onLocationSelected, ...props }, ref) {
 
+        // State Variables
         const [locationSearchInput, setLocationSearchInput] = useState("");
+        const [hasFocus, setHasFocus] = useState(false);
 
+        // Memoized cities list
         const cities = useMemo(() => {
             if (!locationSearchInput) return [];
 
@@ -35,18 +39,29 @@ export default forwardRef<HTMLInputElement, LocationInputProps>(
             <div>
                 <Input
                     ref={ref}
-                    placeholder="Location"
+                    placeholder="Search for a city"
+                    type='search'
                     {...props}
                     onChange={(e) => setLocationSearchInput(e.target.value)}
+                    onFocus={() => setHasFocus(true)}
+                    onBlur={() => setHasFocus(false)}
                     value={locationSearchInput}
                 />
                 <div className='absolute w-auto z-20 divide-y bg-slate-100 shadow-xl '>
                     {/* {JSON.stringify(cities)} */}
-                    {locationSearchInput.trim() && (
+                    {locationSearchInput.trim() && hasFocus && (
                         <div>
                             {!cities.length && <p className='p-3'>No Results</p>}
                             {cities.map((city) => (
-                                <button key={city} className='block w-full text-start p-2 z-auto border-b border-x'>
+                                <button
+                                    key={city}
+                                    className='block w-full text-start p-2 z-auto border-b border-x'
+                                    onMouseDown={(e) => {
+                                        e.preventDefault();
+                                        onLocationSelected(city);
+                                        setLocationSearchInput(city); // Set the input value to the selected city (for display purposes) (or you can clear it if you want to, but I think it's better to keep it for reference)
+                                    }}
+                                >
                                     {city}
                                 </button>
                             ))}
