@@ -84,16 +84,17 @@ const FormItem = React.forwardRef<
 })
 FormItem.displayName = "FormItem"
 
+// Removed the className prop from FormLabel so the red text color is not applied when validation occurs on the FormLabel (titel of the form)
 const FormLabel = React.forwardRef<
   React.ElementRef<typeof LabelPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>
->(({ className, ...props }, ref) => {
+>((props, ref) => { // { className, ...props }
   const { error, formItemId } = useFormField()
 
   return (
     <Label
       ref={ref}
-      className={cn(error && "text-destructive", className)}
+      // className={cn(error && "text-destructive", className)}
       htmlFor={formItemId}
       {...props}
     />
