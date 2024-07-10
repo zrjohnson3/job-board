@@ -50,7 +50,9 @@ export default async function JobFilterSidebar({
             select: { location: true }, // Select only the location field
             distinct: ['location'], // Get distinct locations
         })
-        .then((location) => location.map((location) => location.location)) as string[]);
+        .then((locations) =>
+            locations.map(({ location }) => location).filter(Boolean),
+        )) as string[];
 
     return (
         <aside className="md:w-[280px] sticky top-0 h-fit bg-background border rounded-lg p-2">

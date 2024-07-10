@@ -1,63 +1,58 @@
 import prisma from "@/lib/prisma";
-import JobListItem from "@/components/JobListItem";
 import { JobFilterValues } from "@/lib/validation";
 import { Prisma } from "@prisma/client";
+import JobListItem from "./JobListItem";
 
 interface JobResultsProps {
     filterValues: JobFilterValues;
 }
 
-export default async function JobResults({ filterValues: { q, type, location, remote } }: JobResultsProps) {
+export default async function JobResults({
+    filterValues: { q, type, location, remote },
+}: JobResultsProps) {
     const searchString = q
         ?.split(" ")
         .filter((word) => word.length > 0)
         .join(" & ");
 
-    console.log("Search String:", searchString);
-
     const searchFilter: Prisma.JobWhereInput = searchString
         ? {
             OR: [
-                { title: { contains: searchString, mode: 'insensitive' } },
-                { companyName: { contains: searchString, mode: 'insensitive' } },
-                { type: { contains: searchString, mode: 'insensitive' } },
-                { locationType: { contains: searchString, mode: 'insensitive' } },
-                { location: { contains: searchString, mode: 'insensitive' } },
+                { title: { search: searchString } },
+                { companyName: { search: searchString } },
+                { type: { search: searchString } },
+                { locationType: { search: searchString } },
+                { location: { search: searchString } },
             ],
         }
         : {};
-
-    console.log("Search Filter:", JSON.stringify(searchFilter, null, 2));
 
     const where: Prisma.JobWhereInput = {
         AND: [
             searchFilter,
             type ? { type } : {},
-            location && location !== 'all' ? { location } : {},
+            location ? { location } : {},
             remote ? { locationType: "Remote" } : {},
-            { approved: true },
+            { approved: true }, // Only approved jobs - switch to false to see unapproved jobs / all jobs  (Switch back to true to see only approved jobs for production!)
         ],
     };
 
-    console.log("Where Clause:", JSON.stringify(where, null, 2));
-
     const jobs = await prisma.job.findMany({
         where,
-        orderBy: { createdAt: 'desc' },
+        orderBy: { createdAt: "desc" },
     });
-
-    console.log("Jobs Found:", jobs.length);
 
     return (
         <div className="grow space-y-4">
             {jobs.map((job) => (
-                <JobListItem key={job.id} job={job} />
+                <JobListItem job={job} key={job.id} />
             ))}
             {jobs.length === 0 && (
-                <p className="m-auto text-center mt-20">
+                <p className="m-auto text-center">
                     No jobs found. Try adjusting your search filters.
                 </p>
             )}
         </div>
     );
 }
+
