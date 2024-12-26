@@ -58,7 +58,7 @@ export async function createJobPosting(formData: FormData) {
             applicationUrl: applicationUrl?.trim(),
             description: description?.trim(),
             salary: parseInt(salary),
-            approved: true, // Auto-approve jobs for now just so i can see them on front end right away 
+            // approved: true, // Auto-approve jobs for now just so i can see them on front end right away 
         },
     });
 
