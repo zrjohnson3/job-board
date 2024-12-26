@@ -30,10 +30,11 @@ export default async function JobResults({
     const where: Prisma.JobWhereInput = {
         AND: [
             searchFilter,
-            type ? { type } : {},
+            // Only include `type` if it's not "Any" (handled on frontend)
+            type && type !== "Any" ? { type } : {},
             location ? { location } : {},
             remote ? { locationType: "Remote" } : {},
-            { approved: true }, // Only approved jobs - switch to false to see unapproved jobs / all jobs  (Switch back to true to see only approved jobs for production!)
+            //  { approved: true }, // Only approved jobs - switch to false to see unapproved jobs / all jobs  (Switch back to true to see only approved jobs for production!)
         ],
     };
 

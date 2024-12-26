@@ -1,5 +1,5 @@
 export const jobTypes = [
-    "",
+    "Any",
     "Full-time",
     "Part-time",
     "Contract",
